@@ -6,19 +6,21 @@ function createGrid(size) {
     container.innerHTML = "";
 
     for(let i = 0; i < size * size; i++) {
-        const div = document.createElement("div");
-        div.style.cssText = `border: 1px solid black; width: ${squareSize}px; height: ${squareSize}px`;
-        div.addEventListener("mouseenter", () => {
-            div.style.backgroundColor = colorPickerButton.value;
+        const square = document.createElement("div");
+        square.classList.add("squares");
+        square.style.cssText = `width: ${squareSize}px; height: ${squareSize}px`;
+        square.addEventListener("mouseenter", () => {
+            square.style.backgroundColor = colorPickerButton.value;
         });
-        container.appendChild(div);
+        container.appendChild(square);
     }
 }
 
 createGrid(16);
 
-const resizeButton = document.querySelector("#resize-botton");
+const resizeButton = document.querySelector("#resize-button");
 const colorPickerButton = document.querySelector("#color-picker");
+const clearButton = document.querySelector("#clear-button");
 
 resizeButton.addEventListener("click", () => {
     let newSize = parseInt(prompt("Enter new grid size between 16 and 100: "));
@@ -27,4 +29,11 @@ resizeButton.addEventListener("click", () => {
     }
 
     createGrid(newSize);
+});
+
+clearButton.addEventListener("click", () => {
+    const squares = document.querySelectorAll(".squares");
+    squares.forEach((square) => {
+        square.style.backgroundColor = "white";
+    });
 });
