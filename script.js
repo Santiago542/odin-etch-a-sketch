@@ -11,7 +11,7 @@ function createGrid(size) {
         
         square.classList.add("squares");
         square.style.cssText = `width: ${squareSize}px; height: ${squareSize}px`;
-        square.addEventListener("mousemove", (event) => {
+        square.addEventListener("mouseenter", (event) => {
             if(!isMouseDown) {
                 return;
             }
@@ -38,7 +38,6 @@ function createRandomColor() {
 createGrid(16);
 
 const container = document.querySelector(".container");
-const squares = document.querySelectorAll(".squares");
 const resizeButton = document.querySelector("#resize-button");
 const colorPickerButton = document.querySelector("#color-picker");
 const rainbowButton = document.querySelector("#rainbow-button");
@@ -50,6 +49,10 @@ let isMouseDown = false;
 
 container.addEventListener("mousedown", () => isMouseDown = true);
 container.addEventListener("mouseup", () => isMouseDown = false);
+
+document.addEventListener('dragstart', function(event) {
+    event.preventDefault();
+});
 
 resizeButton.addEventListener("click", () => {
     let newSize = parseInt(prompt("Enter new grid size between 16 and 100: "));
@@ -92,8 +95,4 @@ opacityButton.addEventListener("click", () => {
         opacityButton.style.backgroundColor = "white";
         opacityMode = false;
     }
-});
-
-document.addEventListener('dragstart', function(event) {
-    event.preventDefault();
 });
