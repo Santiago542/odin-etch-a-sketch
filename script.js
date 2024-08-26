@@ -7,8 +7,19 @@ function createGrid(size) {
 
     for(let i = 0; i < size * size; i++) {
         const square = document.createElement("div");
+        let opacity = 0.1;
+        
         square.classList.add("squares");
         square.style.cssText = `width: ${squareSize}px; height: ${squareSize}px`;
+        square.addEventListener("mousemove", (event) => {
+            if(!isMouseDown) {
+                return;
+            }
+            
+            square.style.backgroundColor = randomColor ? createRandomColor(): colorPickerButton.value;
+            square.style.opacity = opacityMode ? opacity: 1;
+            opacity += 0.1;
+        });
         container.appendChild(square);
     }
 }
@@ -37,23 +48,8 @@ let randomColor = false;
 let opacityMode = false;
 let isMouseDown = false;
 
-squares.forEach((square) => {
-    let opacity = 0.1;
-
-    square.addEventListener("mousedown", () => isMouseDown = true);
-
-    square.addEventListener("mousemove", (event) => {
-        if(!isMouseDown) {
-            return;
-        }
-        
-        square.style.backgroundColor = randomColor ? createRandomColor(): colorPickerButton.value;
-        square.style.opacity = opacityMode ? opacity: 1;
-        opacity += 0.1;
-    });
-
-    square.addEventListener("mouseup", () => isMouseDown = false);
-});
+container.addEventListener("mousedown", () => isMouseDown = true);
+container.addEventListener("mouseup", () => isMouseDown = false);
 
 resizeButton.addEventListener("click", () => {
     let newSize = parseInt(prompt("Enter new grid size between 16 and 100: "));
