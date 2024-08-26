@@ -9,13 +9,16 @@ function createGrid(size) {
         const div = document.createElement("div");
         div.style.cssText = `border: 1px solid black; width: ${squareSize}px; height: ${squareSize}px`;
         div.addEventListener("mouseenter", () => {
-            div.style.backgroundColor = "black";
+            div.style.backgroundColor = colorPickerButton.value;
         });
         container.appendChild(div);
     }
 }
 
-const resizeButton = document.querySelector("#resize");
+createGrid(16);
+
+const resizeButton = document.querySelector("#resize-botton");
+const colorPickerButton = document.querySelector("#color-picker");
 
 resizeButton.addEventListener("click", () => {
     let newSize = parseInt(prompt("Enter new grid size between 16 and 100: "));
