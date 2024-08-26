@@ -35,15 +35,24 @@ const opacityButton = document.querySelector("#opacity-button");
 const clearButton = document.querySelector("#clear-button");
 let randomColor = false;
 let opacityMode = false;
+let isMouseDown = false;
 
 squares.forEach((square) => {
     let opacity = 0.1;
 
-    square.addEventListener("mouseenter", (event) => {
+    square.addEventListener("mousedown", () => isMouseDown = true);
+
+    square.addEventListener("mousemove", (event) => {
+        if(!isMouseDown) {
+            return;
+        }
+        
         square.style.backgroundColor = randomColor ? createRandomColor(): colorPickerButton.value;
         square.style.opacity = opacityMode ? opacity: 1;
         opacity += 0.1;
     });
+
+    square.addEventListener("mouseup", () => isMouseDown = false);
 });
 
 resizeButton.addEventListener("click", () => {
@@ -87,4 +96,8 @@ opacityButton.addEventListener("click", () => {
         opacityButton.style.backgroundColor = "white";
         opacityMode = false;
     }
+});
+
+document.addEventListener('dragstart', function(event) {
+    event.preventDefault();
 });
